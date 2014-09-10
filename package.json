@@ -1,0 +1,23 @@
+{
+  "name": "file-upload-demo",
+  "version": "0.0.0",
+  "description": "multipart form/file upload demos with hapi.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js"
+    "client": "open http://localhost:8080/upload"
+  },
+  "keywords": [
+    "multipart",
+    "form",
+    "file",
+    "upload",
+    "demo"
+  ],
+  "author": "J. Voigt",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "hapi": "~6.8.1"
+  }
+}

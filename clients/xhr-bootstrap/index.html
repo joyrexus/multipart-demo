@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+  @media (min-width: 768px) {
+    .container {
+      max-width: 730px;
+      margin-top: 30px;
+    }
+  }
+  .container-narrow > hr {
+    margin: 30px 0;
+  }
+
+  .jumbotron hr {
+    border-top-color: rgb(195, 195, 195);
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+</style>
+<body>
+  <div class="container">
+
+    <div class="jumbotron">
+
+      <form role="form">
+        <div class="form-group">
+          <label for="firstName">First name</label>
+          <input type="name" class="form-control" id="firstName"
+          placeholder="Melvin K.">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last name</label>
+          <input type="name" class="form-control" id="lastName"
+          placeholder="Mooney">
+        </div>
+        <div class="form-group">
+          <label for="inputFile">File input</label>
+          <br>
+          <button type="button" id="inputFile" class="btn btn-default">
+            Select
+          </button>
+        </div>
+      </form>
+
+      <!-- hidden file input element -->
+      <input type="file" id="chooser">
+
+      <hr>
+
+      <button id="submit"
+              type="submit" 
+              class="btn btn-lg btn-primary">
+        <i class="glyphicon glyphicon-upload"></i>
+        Submit
+      </button>
+
+    </div>
+  </div>
+
+<script>
+  // Avoid using jquery
+  var $ = function (id) { return document.getElementById(id) };
+
+  function load() {
+      var File = this.files[0];
+
+      /* READ CONTENT OF FILE FOR INLINE PRESENTATION
+      var reader = new FileReader();
+      reader.onload = function(file) {
+          reader.readAsText(File);
+      };
+      */
+
+      // change inputFile button to name of loaded file
+      $('inputFile').textContent = File.name;
+  };
+
+  $('chooser').addEventListener('change', load);
+  $('inputFile').addEventListener('click', function (e) {
+    $('chooser').click();   // trigger the actual input file element
+    e.preventDefault();     // prevent navigation to "#"
+  }, false);
+
+  // Send our form/file data
+  function send() {
+      var data = new FormData();
+      data.append("file", $('chooser').files[0]);
+      data.append("firstName", firstName.value);
+      data.append("lastName", lastName.value);
+      
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", '/submit', true);
+      xhr.onload = function (e) {
+          if (this.status == 200) {
+              console.log("Form sent!");
+          }
+      };
+      xhr.send(data);
+  };
+
+  $('submit').addEventListener('click', send);
+</script>
